@@ -5,6 +5,18 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "coffee-app.frontend.name" -}}
+{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-frontend" $name -}}
+{{- end }}
+
+{{- define "coffee-app.backend.name" -}}
+{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-backend" $name -}}
+{{- end }}
+
+
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -33,6 +45,25 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
+{{- define "coffee-app.frontend.labels" -}}
+helm.sh/chart: {{ include "coffee-app.chart" . }}
+{{ include "coffee-app.frontend.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{- define "coffee-app.backend.labels" -}}
+helm.sh/chart: {{ include "coffee-app.chart" . }}
+{{ include "coffee-app.backend.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+
 {{- define "coffee-app.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
 {{ include "coffee-app.selectorLabels" . }}
@@ -45,6 +76,16 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
+{{- define "coffee-app.frontend.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "coffee-app.frontend.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- define "coffee-app.backend.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "coffee-app.backend.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{- define "coffee-app.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "coffee-app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
