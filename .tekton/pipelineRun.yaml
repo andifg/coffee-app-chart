@@ -37,7 +37,7 @@ spec:
   - name: yq-select
     value: .spec.source.targetRevision
   - name: yq-target
-    value: values.yaml
+    value: application.yaml
   - name: target-branch
     value: {{target_branch}}
   - name: source-branch
