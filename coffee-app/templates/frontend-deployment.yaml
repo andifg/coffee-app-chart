@@ -31,11 +31,11 @@ spec:
         - name: {{ include "coffee-app.frontend.name" . }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          image: {{ .Values.frontend.image.name }}
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.frontend.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
