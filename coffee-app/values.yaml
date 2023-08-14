@@ -14,7 +14,15 @@ backend:
     type: ClusterIP
     port: 80
   ingress:
-    enabled: false
+    enabled: true
+    host: api.coffee-app.tests.apps.ocp4.gummy-bears.de
+    path: /
+    pathType: ImplementationSpecific
+    tls:
+      enabled: true
+      certManager:
+        enabled: true
+      secretName: api-coffee-app-tls
 
 
 frontend:
