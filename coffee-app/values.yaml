@@ -1,5 +1,9 @@
 # Default values for coffee-app.
 
+nameOverride: coffee-app-test
+fullnameOverride: ""
+
+
 backend:
   containerPort: 8000
   replicaCount: 1
@@ -24,19 +28,18 @@ frontend:
     port: 80
   ingress:
     enabled: true
-    hosts:
-      - host: coffee-app.tests.apps.apps.ocp4.gummy-bears.de
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
+    host: coffee-app.tests.apps.ocp4.gummy-bears.de
+    path: /
+    pathType: ImplementationSpecific
     tls:
       enabled: true
+      certManager:
+        enabled: true
+      secretName: coffee-app-tls
 
 
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

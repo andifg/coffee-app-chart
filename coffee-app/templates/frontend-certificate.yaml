@@ -1,0 +1,15 @@
+{{- if and .Values.frontend.ingress.tls.certManager.enabled .Values.frontend.ingress.tls.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "coffee-app.frontend.name" . }}
+spec:
+  dnsNames:
+    - {{ .Values.frontend.ingress.host | quote }}
+  duration: 2160h0m0s
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  renewBefore: 360h0m0s
+  secretName: {{ .Values.frontend.ingress.tls.secretName }}
+  {{- end }}
