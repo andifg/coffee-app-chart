@@ -22,7 +22,14 @@ backend:
       enabled: true
       certManager:
         enabled: true
+      # If certManger is eanaled, this secret will be created, otherwise it needs to exist already
       secretName: api-coffee-app-tls
+  mongodb:
+    host: mongodb
+    port: 27017
+    username: root
+    # This secret needs to exist already
+    passwordSecretName: mongodb-root-password
 
 
 frontend:

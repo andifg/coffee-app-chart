@@ -37,6 +37,15 @@ spec:
             - name: http
               containerPort: {{ .Values.backend.containerPort }}
               protocol: TCP
+          env:
+          - name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.backend.mongodb.passwordSecretName }}
+                key: mongodb-password
+          envFrom:
+          - configMapRef:
+              name: {{ include "coffee-app.backend.name" . }}
           livenessProbe:
             httpGet:
               path: /health

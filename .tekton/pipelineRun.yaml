@@ -35,7 +35,7 @@ spec:
   - name: chart-name
     value: coffee-app
   - name: yq-select
-    value: .spec.source.targetRevision
+    value: .spec.sources[0].targetRevision
   - name: yq-target
     value: application.yaml
   - name: target-branch
