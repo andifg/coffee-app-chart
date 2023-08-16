@@ -8,14 +8,14 @@ backend:
   containerPort: 8000
   replicaCount: 1
   image:
-    name: image-registry.openshift-image-registry.svc:5000/coffee-app/backend:2023-08-04-00-14-18fc45a66c297c145ca61b75d75c3ae437033fc6
+    name: ""
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
     port: 80
   ingress:
     enabled: true
-    host: api.coffee-app.tests.apps.ocp4.gummy-bears.de
+    host: ""
     path: /
     pathType: ImplementationSpecific
     tls:
@@ -36,14 +36,14 @@ frontend:
   containerPort: 8080
   replicaCount: 1
   image:
-    name: image-registry.openshift-image-registry.svc:5000/coffee-app/frontend:2023-08-03-21-36-da6c8c3b31a6d374ce05f37bc39d2bcafc2438ae
+    name: ""
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
     port: 80
   ingress:
     enabled: true
-    host: coffee-app.tests.apps.ocp4.gummy-bears.de
+    host: ""
     path: /
     pathType: ImplementationSpecific
     tls:
@@ -57,7 +57,7 @@ frontend:
 imagePullSecrets: []
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
