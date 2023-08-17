@@ -5,6 +5,6 @@ metadata:
   labels:
     {{- include "coffee-app.backend.labels" . | nindent 4 }}
 data:
-    mongodb_host: {{ .Values.backend.mongodb.host | quote }}
-    mongodb_port: {{ .Values.backend.mongodb.port | quote }}
-    mongodb_username: {{ .Values.backend.mongodb.username | quote }}
+    MONGODB_HOST: {{ .Values.backend.mongodb.host | quote }}
+    MONGODB_PORT: {{ .Values.backend.mongodb.port | quote }}
+    MONGODB_USERNAME: {{ .Values.backend.mongodb.username | quote }}
