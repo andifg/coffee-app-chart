@@ -33,6 +33,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.frontend.image.name }}
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /var/www/html/env/
           ports:
             - name: http
               containerPort: {{ .Values.frontend.containerPort }}
@@ -47,6 +50,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "coffee-app.frontend.name" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
