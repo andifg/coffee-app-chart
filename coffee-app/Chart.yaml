@@ -27,3 +27,6 @@ dependencies:
 - name: mongodb
   version: "13.16.3"
   repository: "oci://registry-1.docker.io/bitnamicharts"
+- name: minio
+  version: "12.8.12"
+  repository: "oci://registry-1.docker.io/bitnamicharts"

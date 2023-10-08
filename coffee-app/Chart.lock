@@ -2,5 +2,8 @@ dependencies:
 - name: mongodb
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 13.16.3
-digest: sha256:27a46532082feffd2dcd2aa68175b8f1b35824f2963e063cf60912f4f12d02e4
-generated: "2023-08-16T22:33:57.677247+02:00"
+- name: minio
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 12.8.12
+digest: sha256:2ade7d1441243f4356210ceb3cf09e0e79ddfca0dabef4757f5a37b9c59f49da
+generated: "2023-10-08T16:58:50.729652+02:00"
