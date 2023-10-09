@@ -100,6 +100,7 @@ minio:
     enabled: false
   provisioning:
     enabled: true
+    extraCommands: []
     buckets:
        - name: coffee-images
          versioning: true
