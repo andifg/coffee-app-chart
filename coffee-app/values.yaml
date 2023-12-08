@@ -30,6 +30,11 @@ backend:
     username: root
     # This secret needs to exist already
     passwordSecretName: mongodb-root-password
+  minio:
+    host: minio
+    port: 9000
+    coffee_images_bucket: coffee-images
+    credentialsSecretName: minio-credentials
 
 
 frontend:
@@ -71,3 +76,35 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 autoscaling: {}
+
+mongodb:
+  podSecurityContext:
+    enabled: false
+    fsGroup: ""
+    runAsUser: "100108001"
+
+  containerSecurityContext:
+    enabled: false
+    runAsUser: "100108001"
+    runAsNonRoot: false
+
+  auth:
+    existingSecret: mongodb-root-password
+
+minio:
+  auth:
+    existingSecret: minio-credentials
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  provisioning:
+    enabled: true
+    extraCommands: []
+    buckets:
+       - name: coffee-images
+         versioning: true
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false

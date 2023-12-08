@@ -8,3 +8,6 @@ data:
     MONGODB_HOST: {{ .Values.backend.mongodb.host | quote }}
     MONGODB_PORT: {{ .Values.backend.mongodb.port | quote }}
     MONGODB_USERNAME: {{ .Values.backend.mongodb.username | quote }}
+    MINIO_HOST: {{ .Values.backend.minio.host | quote }}
+    MINIO_PORT: {{ .Values.backend.minio.port | quote }}
+    MINIO_COFFEE_IMAGES_BUCKET: {{ .Values.backend.minio.coffee_images_bucket | quote }}

@@ -13,3 +13,10 @@ rate different coffee beans. The project consists of the following repositories:
 ## TODO:
 
 Add more quality tools like kube-score
+
+
+## Dependent Resources that need to exist before deploying chart
+
+Secrets:
+- minio-credentials: Secret holding minio credentials (keys: root-password, root-user)
+- mongodb-root-password: Secret holding mongodb root password (key: mongodb-root-password)

@@ -43,6 +43,16 @@ spec:
               secretKeyRef:
                 name: {{ .Values.backend.mongodb.passwordSecretName }}
                 key: mongodb-root-password
+          - name: MINIO_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.backend.minio.credentialsSecretName }}
+                key: root-user
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.backend.minio.credentialsSecretName }}
+                key: root-password
           envFrom:
           - configMapRef:
               name: {{ include "coffee-app.backend.name" . }}
