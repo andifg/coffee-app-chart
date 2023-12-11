@@ -3,7 +3,6 @@
 nameOverride: coffee-app-test
 fullnameOverride: ""
 
-
 backend:
   containerPort: 8000
   replicaCount: 1
@@ -108,3 +107,55 @@ minio:
       enabled: false
     containerSecurityContext:
       enabled: false
+
+keycloak:
+  fullnameOverride: coffee-app-test-keycloak
+  realm: Coffee-App
+  client_id: coffee-app
+  production: true
+  proxy: edge
+
+  podSecurityContext:
+    enabled: false
+
+
+  extraStartupArgs: "--import-realm"
+
+
+  containerSecurityContext:
+    enabled: false
+
+  extraVolumes:
+    - name: inital-realm
+      configMap:
+        name: keycloak-realm-import
+
+  extraVolumeMounts:
+    - name: inital-realm
+      mountPath: /opt/bitnami/keycloak/data/import/
+
+  ingress:
+    enabled: true
+    hostname: keycloak-test.apps.cluster.local
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+    extraTls:
+      - hosts:
+          # Make sure its same as ingress.hostname
+          - keycloak-test.apps.cluster.local
+        secretName: keycloak-tls
+
+
+  postgresql:
+    fullnameOverride: coffee-app-test-keycloak-postgresql
+    primary:
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+    auth:
+      existingSecret: keycloak-postgres-password
+
+  auth:
+    adminUser: admin
+    existingSecret: keycloak-admin-password

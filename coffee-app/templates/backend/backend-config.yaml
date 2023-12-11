@@ -11,3 +11,7 @@ data:
     MINIO_HOST: {{ .Values.backend.minio.host | quote }}
     MINIO_PORT: {{ .Values.backend.minio.port | quote }}
     MINIO_COFFEE_IMAGES_BUCKET: {{ .Values.backend.minio.coffee_images_bucket | quote }}
+    KEYKLOAK_HOST: "keycloak"
+    KEYKLOAK_REALM: str = {{ .Values.keycloak.realm | quote }}
+    KEYKLOAK_PROTOCOL: str = "http"
+    KEYKLOAK_CLIENT_ID: str = {{ .Values.keycloak.client_id | quote }}

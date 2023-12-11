@@ -20,3 +20,7 @@ Add more quality tools like kube-score
 Secrets:
 - minio-credentials: Secret holding minio credentials (keys: root-password, root-user)
 - mongodb-root-password: Secret holding mongodb root password (key: mongodb-root-password)
+- keycloak-postgres-secret: Secret holding postgres password for keycloak instance
+    as well as password for keycloak db user (key (keycloak db user): password,
+    key(postgres admin password): postgres-password)
+- keycloak-admin-password: (key: admin-password) Secret holding keycloak admin password
