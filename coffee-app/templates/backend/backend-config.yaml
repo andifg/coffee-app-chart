@@ -14,5 +14,5 @@ data:
     KEYKLOAK_HOST: "keycloak"
     LOG_LEVEL: {{ .Values.backend.log_level | quote }}
     KEYKLOAK_REALM: str = {{ .Values.keycloak.realm | quote }}
-    KEYKLOAK_PROTOCOL: str = "http"
-    KEYKLOAK_CLIENT_ID: str = {{ .Values.keycloak.client_id | quote }}
+    KEYKLOAK_PROTOCOL: "http"
+    KEYKLOAK_CLIENT_ID: {{ .Values.keycloak.client_id | quote }}
