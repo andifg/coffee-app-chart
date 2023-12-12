@@ -4,6 +4,7 @@ nameOverride: coffee-app-test
 fullnameOverride: ""
 
 backend:
+  log_level: "info"
   containerPort: 8000
   replicaCount: 1
   image:
