@@ -5,5 +5,8 @@ dependencies:
 - name: minio
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.8.12
-digest: sha256:2ade7d1441243f4356210ceb3cf09e0e79ddfca0dabef4757f5a37b9c59f49da
-generated: "2023-10-08T16:58:50.729652+02:00"
+- name: keycloak
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 17.3.5
+digest: sha256:f8feec9aca5883a3f3e5dd86d9fede059f07027aa0b9328f0b5d8862eb1dda2c
+generated: "2023-12-11T15:06:25.42067+01:00"

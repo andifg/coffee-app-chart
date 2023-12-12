@@ -6,4 +6,5 @@ data:
   env.js: |
     window.env = {
       BACKEND_URL: 'https://{{ .Values.backend.ingress.host }}',
+      AUTH_URL: "https://{{ .Values.keycloak.ingress.hostname }}/realms/{{ .Values.keycloak.realm }}",
     };
