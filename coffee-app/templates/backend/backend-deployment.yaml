@@ -53,6 +53,8 @@ spec:
               secretKeyRef:
                 name: {{ .Values.backend.minio.credentialsSecretName }}
                 key: root-password
+          - name: PYTHONUNBUFFERED
+            value: "1"
           envFrom:
           - configMapRef:
               name: {{ include "coffee-app.backend.name" . }}
