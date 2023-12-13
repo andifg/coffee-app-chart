@@ -15,6 +15,6 @@ data:
     KEYCLOAK_ISSUER_HOST: {{ .Values.keycloak.ingress.hostname | quote }}
     KEYKLOAK_ISSUER_PROTOCOL: "https"
     KEYKLOAK_REALM: {{ .Values.keycloak.realm | quote }}
-    KEYKLOAK_HOST: {{ .Values.keycloak.fullnameOverride | quote }}
-    KEYKLOAK_PROTOCOL: "http"
+    KEYKLOAK_HOST: {{ .Values.keycloak.ingress.hostname | quote }}
+    KEYKLOAK_PROTOCOL: "https"
     KEYKLOAK_CLIENT_ID: {{ .Values.keycloak.client_id | quote }}
