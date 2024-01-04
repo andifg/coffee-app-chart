@@ -58,6 +58,7 @@ data:
           "firstName": "test",
           "lastName": "test",
           "email": "test@example.com",
+          "realmRoles" : [ "default-roles-coffee-app" ],
           "credentials": [
             {
               "type": "password",
@@ -78,7 +79,8 @@ data:
           "clientAuthenticatorType": "client-secret",
           "redirectUris": [
             "https://{{ .Values.frontend.ingress.host }}/home",
-            "https://{{ .Values.frontend.ingress.host }}"
+            "https://{{ .Values.frontend.ingress.host }}",
+            "https://{{ .Values.frontend.ingress.host }}/feed"
           ],
           "webOrigins": [
             "https://{{ .Values.frontend.ingress.host }}"
