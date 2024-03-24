@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "coffee-app.name" . }}-redpanda-console"
+  labels:
+    app: redpanda-console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redpanda-console
+  template:
+    metadata:
+      labels:
+        app: redpanda-console
+    spec:
+      containers:
+      - name: nginx
+        image: docker.redpanda.com/redpandadata/console:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: KAFKA_BROKERS
+          value: {{ .Values.kafka.clusterName }}-kafka-brokers.kafka-tests.svc.cluster.local:9092
+        - name: KAFKA_SASL_ENABLED
+          value: "true"
+        - name: KAFKA_SASL_USERNAME
+          value: kowl
+        - name: KAFKA_SASL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.kafka.saslUserName }}
+              key: password
+        - name: KAFKA_SASL_MECHANISM
+          value: SCRAM-SHA-512
+        - name: KAFKA_TLS_ENABLED
+          value: "true"
+        - name: KAFKA_TLS_INSECURESKIPTLSVERIFY
+          value: "true"
+        - name: KAFKA_TSL_CAFILEPATH
+          value: /var/run/secrets/custom/ca.crt
+        volumeMounts:
+        - name: my-cluster-ca
+          mountPath: /var/run/secrets/custom
+          readOnly: true
+      volumes:
+      - name: my-cluster-ca
+        secret:
+          secretName: "{{ .Values.kafka.clusterName }}-cluster-ca-cert"
+          items:
+          - key: ca.crt
+            path: ca.crt

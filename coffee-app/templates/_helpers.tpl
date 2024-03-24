@@ -15,6 +15,11 @@ Expand the name of the chart.
 {{- printf "%s-backend" $name -}}
 {{- end }}
 
+{{- define "coffee-app.resizer.name" -}}
+{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-resizer" $name -}}
+{{- end }}
+
 
 
 {{/*
@@ -63,6 +68,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{- define "coffee-app.resizer.labels" -}}
+helm.sh/chart: {{ include "coffee-app.chart" . }}
+{{ include "coffee-app.resizer.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
 
 {{- define "coffee-app.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
@@ -86,6 +100,11 @@ app.kubernetes.io/name: {{ include "coffee-app.backend.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "coffee-app.resizer.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "coffee-app.resizer.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{- define "coffee-app.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "coffee-app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
@@ -101,4 +120,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-

@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "coffee-app.resizer.name" . }}
+  labels:
+    {{- include "coffee-app.resizer.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.resizer.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "coffee-app.resizer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "coffee-app.resizer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "coffee-app.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "coffee-app.resizer.name" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ .Values.resizer.image.name }}
+          imagePullPolicy: {{ .Values.resizer.image.pullPolicy }}
+          env:
+          - name: MINIO_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.resizer.minio.credentialsSecretName }}
+                key: root-user
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.resizer.minio.credentialsSecretName }}
+                key: root-password
+          - name: kafka_sasl_password
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.kafka.saslUserName }}
+                key: password
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          envFrom:
+          - configMapRef:
+              name: {{ include "coffee-app.resizer.name" . }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: kafka-root-ca
+              mountPath: {{ .Values.resizer.kafka_ssl_cafile }}
+              readOnly: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: kafka-root-ca
+          secret:
+            secretName: {{ .Values.kafka.clusterName }}-cluster-ca-cert
+            items:
+              - key: ca.crt
+                path: ca.crt
