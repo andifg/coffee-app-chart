@@ -58,7 +58,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: kafka-root-ca
-              mountPath: {{ .Values.resizer.kafka_ssl_cafile }}
+              mountPath: {{ .Values.resizer.kafkaSslCaFile }}
               readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:

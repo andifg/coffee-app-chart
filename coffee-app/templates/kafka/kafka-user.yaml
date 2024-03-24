@@ -14,7 +14,7 @@ spec:
       operations:
         - All
       resource:
-        name: my-topic
+        name: coffee-images
         patternType: literal
         type: topic
     - host: '*'
@@ -22,4 +22,12 @@ spec:
         - All
       resource:
         type: cluster
+      type: allow
+    - host: '*'
+      operations:
+        - All
+      resource:
+        type: group
+        name: {{ .Values.resizer.kafkaConsumerGroup}}
+        patternType: literal
       type: allow

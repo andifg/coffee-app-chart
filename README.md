@@ -11,6 +11,7 @@ rate different coffee beans. The project consists of the following repositories:
 - [GitOps](https://github.com/andifg/coffee-app-gitops.git) - Gitops repository for ArgoCD reflecting deployed applications for test and prod env
 
 
+
 ## TODO:
 
 Add more quality tools like kube-score

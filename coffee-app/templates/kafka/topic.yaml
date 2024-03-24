@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: {{ .Values.resizer.kafka_topic | quote }}
+  name: coffee-images
   labels:
     strimzi.io/cluster: {{ .Values.kafka.clusterName }}
 spec:

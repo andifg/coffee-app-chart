@@ -21,11 +21,11 @@ spec:
         - containerPort: 80
         env:
         - name: KAFKA_BROKERS
-          value: {{ .Values.kafka.clusterName }}-kafka-brokers.kafka-tests.svc.cluster.local:9092
+          value: {{ .Values.kafka.clusterName }}-kafka-brokers.{{ .Release.Namespace }}.svc.cluster.local:9092
         - name: KAFKA_SASL_ENABLED
           value: "true"
         - name: KAFKA_SASL_USERNAME
-          value: kowl
+          value: {{ .Values.kafka.saslUserName }}
         - name: KAFKA_SASL_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -36,12 +36,12 @@ spec:
         - name: KAFKA_TLS_ENABLED
           value: "true"
         - name: KAFKA_TLS_INSECURESKIPTLSVERIFY
-          value: "true"
-        - name: KAFKA_TSL_CAFILEPATH
-          value: /var/run/secrets/custom/ca.crt
+          value: "false"
+        - name: KAFKA_TLS_CAFILEPATH
+          value: "{{ .Values.resizer.kafkaSslCaFile }}/ca.crt"
         volumeMounts:
         - name: my-cluster-ca
-          mountPath: /var/run/secrets/custom
+          mountPath: {{ .Values.resizer.kafkaSslCaFile }}
           readOnly: true
       volumes:
       - name: my-cluster-ca
