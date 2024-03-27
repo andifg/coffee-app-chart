@@ -5,10 +5,7 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "coffee-app.frontend.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- printf "%s-frontend" $name -}}
-{{- end }}
+{{- define "coffee-app.frontend.name" -}}frontend{{- end }}
 
 {{- define "coffee-app.backend.name" -}}
 {{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
@@ -52,6 +49,7 @@ Common labels
 */}}
 {{- define "coffee-app.frontend.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
+frontendVersion: {{ splitList ":" .Values.frontend.image.name | last | quote }}
 {{ include "coffee-app.frontend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

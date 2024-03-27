@@ -1,6 +1,6 @@
 # Default values for coffee-app.
 
-nameOverride: coffee-app-test
+nameOverride: ""
 fullnameOverride: ""
 
 backend:
@@ -41,7 +41,7 @@ frontend:
   containerPort: 8080
   replicaCount: 1
   image:
-    name: ""
+    name: "image-registry.openshift-image-registry.svc:5000/coffee-app-build/frontend:2024-02-19-14-57-3e79a38dda5e705b0ecb47cfd658ceb34087fd24"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
