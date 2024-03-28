@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.minio.extraEnvVarsCM }}
+  labels:
+    {{- include "coffee-app.labels" . | nindent 4 }}
+data:
+    MINIO_NOTIFY_KAFKA_ENABLE_COFFEE: "on"
+    MINIO_NOTIFY_KAFKA_BROKERS_COFFEE: "{{ .Values.kafka.clusterName }}-kafka-brokers:9092"
+    MINIO_NOTIFY_KAFKA_TOPIC_COFFEE: "coffee-images"
+    MINIO_NOTIFY_KAFKA_TLS_COFFEE: "on"
+    MINIO_NOTIFY_KAFKA_TLS_SKIP_VERIFY_COFFEE: "on"
+    MINIO_NOTIFY_KAFKA_SASL_COFFEE: "on"
+    MINIO_NOTIFY_KAFKA_SASL_MECHANISM_COFFEE: "SHA512"
+    MINIO_NOTIFY_KAFKA_SASL_USERNAME_COFFEE: "{{ .Values.kafka.saslUserName }}"

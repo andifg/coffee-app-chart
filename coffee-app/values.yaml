@@ -58,6 +58,23 @@ frontend:
       secretName: coffee-app-tls
 
 
+resizer:
+  logLevel: "info"
+  thumbnailWidth: 1200
+  thumbnailFormat: "JPEG"
+  kafkaSecurityProtocol: "SASL_SSL"
+  kafkaSslCaFile: "/var/run/secrets/custom"
+  kafkaSaslMechanism: "SCRAM-SHA-512"
+  kafkaConsumerGroup: coffee-app-resizer
+  reduceType: "THUMBNAIL"
+  replicaCount: 1
+  image:
+    name: ""
+    pullPolicy: IfNotPresent
+  minio:
+    originalImagesPrefix: original
+    coffee_images_bucket: coffee-images
+    credentialsSecretName: minio-credentials
 
 imagePullSecrets: []
 serviceAccount:
@@ -100,19 +117,31 @@ minio:
     enabled: false
   provisioning:
     enabled: true
-    extraCommands: []
+    extraCommands:
+      - mc version enable provisioning/coffee-images
+      - mc event add provisioning/coffee-images arn:minio:sqs::COFFEE:kafka -p --event "put,delete" --prefix original/
     buckets:
-       - name: coffee-images
-         versioning: true
+      - name: coffee-images
+        versioning: true
     podSecurityContext:
       enabled: false
     containerSecurityContext:
       enabled: false
+  extraEnvVars:
+    - name: MINIO_NOTIFY_KAFKA_SASL_PASSWORD_COFFEE
+      valueFrom:
+        secretKeyRef:
+          # Needs to match .Values.kafka.saslUserName
+          name: kafka-user
+          key: password
+  extraEnvVarsCM: minio-event-listener
+
+
 
 keycloak:
   fullnameOverride: coffee-app-test-keycloak
   realm: Coffee-App
-  client_id: coffee-app
+  client_id: react-app
   production: true
   proxy: edge
 
@@ -160,3 +189,7 @@ keycloak:
   auth:
     adminUser: admin
     existingSecret: keycloak-admin-password
+
+kafka:
+  clusterName: coffee-app-test
+  saslUserName: kafka-user

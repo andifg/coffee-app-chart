@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "coffee-app.resizer.name" . }}
+  labels:
+    {{- include "coffee-app.resizer.labels" . | nindent 4 }}
+data:
+    LOG_LEVEL: {{ .Values.resizer.logLevel | quote }}
+    THUMBNAIL_WIDTH: {{ .Values.resizer.thumbnailWidth | quote }}
+    THUMBNAIL_FORMAT: {{ .Values.resizer.thumbnailFormat | quote }}
+    KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka.clusterName }}-kafka-brokers.{{ .Release.Namespace }}.svc.cluster.local:9092
+    KAFKA_TOPIC: "coffee-images"
+    KAFKA_CONSUMER_GROUP: {{ .Values.resizer.kafkaConsumerGroup | quote }}
+    KAFKA_SECURITY_PROTOCOL: {{ .Values.resizer.kafkaSecurityProtocol | quote }}
+    KAFKA_SSL_CAFILE: "{{ .Values.resizer.kafkaSslCaFile }}/ca.crt"
+    KAFKA_SASL_MECHANISM: {{ .Values.resizer.kafkaSaslMechanism | quote }}
+    KAFKA_SASL_USERNAME: {{ .Values.kafka.saslUserName | quote }}
+    REDUCE_TYPE: {{ .Values.resizer.reduceType | quote }}
+    MINIO_HOST: {{ .Values.backend.minio.host | quote }}
+    MINIO_PORT: {{ .Values.backend.minio.port | quote }}
+    MINIO_ORIGINAL_IMAGES_PREFIX: {{ .Values.resizer.minio.originalImagesPrefix | quote }}
+    MINIO_COFFEE_IMAGES_BUCKET: {{ .Values.resizer.minio.coffeeImagesBucket | quote }}
