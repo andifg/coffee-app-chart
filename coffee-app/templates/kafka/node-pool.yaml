@@ -16,4 +16,4 @@ spec:
       - id: 0
         type: persistent-claim
         size: 20Gi
-        deleteClaim: false
+        deleteClaim: true
