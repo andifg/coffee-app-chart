@@ -5,13 +5,16 @@ metadata:
   labels:
     {{- include "coffee-app.backend.labels" . | nindent 4 }}
 data:
-    MONGODB_HOST: {{ .Values.backend.mongodb.host | quote }}
-    MONGODB_PORT: {{ .Values.backend.mongodb.port | quote }}
-    MONGODB_USERNAME: {{ .Values.backend.mongodb.username | quote }}
+    MONGODB_HOST: {{ .Values.mongodb.fullnameOverride | quote }}
+    MONGODB_PORT: {{ .Values.mongodb.containerPorts.mongodb | quote }}
+    MONGODB_USERNAME: {{ .Values.mongodb.auth.rootUser | quote }}
     LOG_LEVEL: {{ .Values.backend.log_level | quote }}
-    MINIO_HOST: {{ .Values.backend.minio.host | quote }}
-    MINIO_PORT: {{ .Values.backend.minio.port | quote }}
-    MINIO_COFFEE_IMAGES_BUCKET: {{ .Values.backend.minio.coffee_images_bucket | quote }}
+    MINIO_HOST: {{ .Values.minio.fullnameOverride | quote }}
+    MINIO_PORT: {{ .Values.minio.containerPorts.api | quote }}
+    {{- with (index .Values.minio.provisioning.buckets 0) }}
+    MINIO_COFFEE_IMAGES_BUCKET: {{ .name | quote }}
+    {{- end }}
+    MINIO_ORIGINAL_IMAGES_PREFIX: {{ .Values.backend.minioOriginalImagesPrefix | quote }}
     KEYCLOAK_ISSUER_HOST: {{ .Values.keycloak.ingress.hostname | quote }}
     KEYKLOAK_ISSUER_PROTOCOL: "https"
     KEYKLOAK_REALM: {{ .Values.keycloak.realm | quote }}

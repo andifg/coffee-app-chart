@@ -24,17 +24,7 @@ backend:
         enabled: true
       # If certManger is eanaled, this secret will be created, otherwise it needs to exist already
       secretName: api-coffee-app-tls
-  mongodb:
-    host: mongodb
-    port: 27017
-    username: root
-    # This secret needs to exist already
-    passwordSecretName: mongodb-root-password
-  minio:
-    host: minio
-    port: 9000
-    coffee_images_bucket: coffee-images
-    credentialsSecretName: minio-credentials
+  minioOriginalImagesPrefix: original
 
 
 frontend:
@@ -95,6 +85,7 @@ affinity: {}
 autoscaling: {}
 
 mongodb:
+  fullnameOverride: mongodb
   podSecurityContext:
     enabled: false
     fsGroup: ""
@@ -109,6 +100,7 @@ mongodb:
     existingSecret: mongodb-root-password
 
 minio:
+  fullnameOverride: minio
   auth:
     existingSecret: minio-credentials
   podSecurityContext:
