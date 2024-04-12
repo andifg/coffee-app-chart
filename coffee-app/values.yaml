@@ -131,7 +131,7 @@ minio:
 
 
 keycloak:
-  fullnameOverride: coffee-app-test-keycloak
+  fullnameOverride: keycloak
   realm: Coffee-App
   client_id: react-app
   production: true
@@ -169,7 +169,7 @@ keycloak:
 
 
   postgresql:
-    fullnameOverride: coffee-app-test-keycloak-postgresql
+    fullnameOverride: keycloak-postgresql
     primary:
       podSecurityContext:
         enabled: false
