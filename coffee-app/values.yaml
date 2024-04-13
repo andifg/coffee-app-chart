@@ -63,7 +63,7 @@ resizer:
     pullPolicy: IfNotPresent
   minio:
     originalImagesPrefix: original
-    coffee_images_bucket: coffee-images
+    coffeeImagesBucket: coffee-images
     credentialsSecretName: minio-credentials
 
 imagePullSecrets: []
