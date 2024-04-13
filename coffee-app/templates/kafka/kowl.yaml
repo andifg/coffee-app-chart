@@ -1,11 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ include "coffee-app.name" . }}-redpanda-console"
+  name: redpanda-console
   labels:
     app: redpanda-console
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: redpanda-console

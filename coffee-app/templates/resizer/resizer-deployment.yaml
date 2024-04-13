@@ -8,6 +8,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.resizer.replicaCount }}
   {{- end }}
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       {{- include "coffee-app.resizer.selectorLabels" . | nindent 6 }}

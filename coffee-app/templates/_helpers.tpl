@@ -9,11 +9,7 @@ Expand the name of the chart.
 
 {{- define "coffee-app.backend.name" -}}backend{{- end }}
 
-{{- define "coffee-app.resizer.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- printf "%s-resizer" $name -}}
-{{- end }}
-
+{{- define "coffee-app.resizer.name" -}}resizer{{- end }}
 
 
 {{/*
@@ -66,6 +62,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{- define "coffee-app.resizer.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
+resizerVersion: {{ splitList ":" .Values.resizer.image.name | last | quote }}
 {{ include "coffee-app.resizer.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
