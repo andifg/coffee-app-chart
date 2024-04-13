@@ -29,3 +29,4 @@ Secrets:
 
 Operators:
 - Strimzi Operator (or AMQ Streams)
+- Openshift ADP (only if backup is enabled)

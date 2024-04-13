@@ -128,8 +128,6 @@ minio:
           key: password
   extraEnvVarsCM: minio-event-listener
 
-
-
 keycloak:
   fullnameOverride: keycloak
   realm: Coffee-App
@@ -167,10 +165,11 @@ keycloak:
           - keycloak-test.apps.cluster.local
         secretName: keycloak-tls
 
-
   postgresql:
     fullnameOverride: keycloak-postgresql
     primary:
+      persistence:
+        existingClaim: data-keycloak-postgresql-0
       podSecurityContext:
         enabled: false
       containerSecurityContext:
@@ -185,3 +184,14 @@ keycloak:
 kafka:
   clusterName: kafka
   saslUserName: kafka-user
+
+# If enabled is set to true, an Openshift ADP schedule will be created, operator and ADP must exist
+backup:
+  enabled: true
+  openshiftAdpNamespace: openshift-adp
+  schedule: '0 5 * * 1'
+  # Name of an existing Openshift ADP storage location
+  adpStorageLocationName: 'aws-s3'
+  ttl: 4w
+  keycloak:
+    enabled: true
