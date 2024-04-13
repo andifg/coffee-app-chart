@@ -7,6 +7,7 @@ metadata:
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.backend.replicaCount }}
+  revisionHistoryLimit: 3
   {{- end }}
   selector:
     matchLabels:
@@ -41,17 +42,17 @@ spec:
           - name: MONGODB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.backend.mongodb.passwordSecretName }}
+                name: {{ .Values.mongodb.auth.existingSecret }}
                 key: mongodb-root-password
           - name: MINIO_ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.backend.minio.credentialsSecretName }}
+                name: {{ .Values.minio.auth.existingSecret }}
                 key: root-user
           - name: MINIO_SECRET_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.backend.minio.credentialsSecretName }}
+                name: {{ .Values.minio.auth.existingSecret }}
                 key: root-password
           - name: PYTHONUNBUFFERED
             value: "1"

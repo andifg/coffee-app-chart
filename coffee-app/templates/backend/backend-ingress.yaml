@@ -17,7 +17,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "coffee-app.labels" . | nindent 4 }}
+    {{- include "coffee-app.backend.labels" . | nindent 4 }}
   {{- with .Values.backend.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

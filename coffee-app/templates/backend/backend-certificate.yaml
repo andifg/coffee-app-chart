@@ -3,6 +3,8 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: {{ include "coffee-app.backend.name" . }}
+  labels:
+    {{- include "coffee-app.backend.labels" . | nindent 4 }}
 spec:
   dnsNames:
     - {{ .Values.backend.ingress.host | quote }}

@@ -5,21 +5,11 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "coffee-app.frontend.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- printf "%s-frontend" $name -}}
-{{- end }}
+{{- define "coffee-app.frontend.name" -}}frontend{{- end }}
 
-{{- define "coffee-app.backend.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- printf "%s-backend" $name -}}
-{{- end }}
+{{- define "coffee-app.backend.name" -}}backend{{- end }}
 
-{{- define "coffee-app.resizer.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-{{- printf "%s-resizer" $name -}}
-{{- end }}
-
+{{- define "coffee-app.resizer.name" -}}resizer{{- end }}
 
 
 {{/*
@@ -52,6 +42,7 @@ Common labels
 */}}
 {{- define "coffee-app.frontend.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
+frontendVersion: {{ splitList ":" .Values.frontend.image.name | last | quote }}
 {{ include "coffee-app.frontend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -61,6 +52,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{- define "coffee-app.backend.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
+backendVersion: {{ splitList ":" .Values.backend.image.name | last | quote }}
 {{ include "coffee-app.backend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -70,6 +62,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{- define "coffee-app.resizer.labels" -}}
 helm.sh/chart: {{ include "coffee-app.chart" . }}
+resizerVersion: {{ splitList ":" .Values.resizer.image.name | last | quote }}
 {{ include "coffee-app.resizer.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
