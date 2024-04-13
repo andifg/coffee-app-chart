@@ -3,7 +3,7 @@ kind: KafkaUser
 metadata:
   name: {{ .Values.kafka.saslUserName }}
   labels:
-    strimzi.io/cluster: "{{ include "coffee-app.name" . }}"
+    strimzi.io/cluster: {{ .Values.kafka.clusterName }}
 spec:
   authentication:
     type: scram-sha-512

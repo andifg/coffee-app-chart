@@ -183,5 +183,5 @@ keycloak:
     existingSecret: keycloak-admin-password
 
 kafka:
-  clusterName: coffee-app-test
+  clusterName: kafka
   saslUserName: kafka-user
