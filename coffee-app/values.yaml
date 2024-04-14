@@ -99,6 +99,9 @@ mongodb:
   auth:
     existingSecret: mongodb-root-password
 
+  persistence:
+    existingClaim: mongodb
+
 minio:
   fullnameOverride: minio
   auth:
