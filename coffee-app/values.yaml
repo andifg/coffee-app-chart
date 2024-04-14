@@ -127,6 +127,8 @@ minio:
           name: kafka-user
           key: password
   extraEnvVarsCM: minio-event-listener
+  persistence:
+    existingClaim: minio
 
 keycloak:
   fullnameOverride: keycloak
@@ -195,3 +197,7 @@ backup:
   ttl: 4w
   keycloak:
     enabled: true
+  minio:
+    enabled: false
+  mongodb:
+    enabled: false
