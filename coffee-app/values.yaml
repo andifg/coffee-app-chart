@@ -197,7 +197,7 @@ backup:
   schedule: '0 5 * * 1'
   # Name of an existing Openshift ADP storage location
   adpStorageLocationName: 'aws-s3'
-  ttl: 4w
+  ttl: 672h
   keycloak:
     enabled: true
   minio:
