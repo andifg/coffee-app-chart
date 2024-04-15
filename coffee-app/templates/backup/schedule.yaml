@@ -1,0 +1,22 @@
+{{- if .Values.backup.enabled -}}
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.backup.openshiftAdpNamespace }}
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  template:
+    includedNamespaces:
+      - {{ .Release.Namespace }}
+    orLabelSelectors:
+      - matchExpressions:
+          - key: backup-pvc-snapshot-to-s3
+            operator: In
+            values:
+              - "true"
+    snapshotMoveData: true
+    storageLocation: {{ .Values.backup.adpStorageLocationName }}
+    ttl: {{ .Values.backup.ttl }}
+{{- end }}

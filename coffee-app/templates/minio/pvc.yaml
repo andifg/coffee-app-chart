@@ -1,0 +1,17 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio
+  labels:
+    {{- include "coffee-app.labels" . | nindent 4 }}
+    {{if .Values.backup.enabled -}}
+    {{if .Values.backup.minio.enabled -}}
+    backup-pvc-snapshot-to-s3: "true"
+    {{- end }}
+    {{- end }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
