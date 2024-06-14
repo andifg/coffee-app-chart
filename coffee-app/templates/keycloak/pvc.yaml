@@ -2,7 +2,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ .Values.keycloak.postgresql.primary.persistence.existingClaim }}
-  namespace: coffee-app-test
   labels:
     {{- include "coffee-app.labels" . | nindent 4 }}
     {{if .Values.backup.enabled -}}
