@@ -9,6 +9,7 @@ data:
     MONGODB_PORT: {{ .Values.mongodb.containerPorts.mongodb | quote }}
     MONGODB_USERNAME: {{ .Values.mongodb.auth.rootUser | quote }}
     LOG_LEVEL: {{ .Values.backend.log_level | quote }}
+    ORIGINS: '[{{ printf "https://%s" .Values.frontend.ingress.host | quote}}]'
     MINIO_HOST: {{ .Values.minio.fullnameOverride | quote }}
     MINIO_PORT: {{ .Values.minio.containerPorts.api | quote }}
     {{- with (index .Values.minio.provisioning.buckets 0) }}
