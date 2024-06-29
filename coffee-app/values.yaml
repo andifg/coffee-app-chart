@@ -114,7 +114,7 @@ minio:
     enabled: true
     extraCommands:
       - mc version enable provisioning/coffee-images
-      - mc event add provisioning/coffee-images arn:minio:sqs::COFFEE:kafka -p --event "put,delete" --prefix original/
+      - mc event add provisioning/coffee-images arn:minio:sqs::COFFEE:kafka -p --event "put,delete" --prefix **/original/
     buckets:
       - name: coffee-images
         versioning: true
