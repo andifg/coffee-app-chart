@@ -1,0 +1,14 @@
+{{- if .Values.backend.prometheus.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: coffee-app-backend
+spec:
+  endpoints:
+  - interval: 600s
+    port: http
+    scheme: http
+  selector:
+    matchLabels:
+        {{- include "coffee-app.backend.selectorLabels" . | nindent 6 }}
+{{- end }}
