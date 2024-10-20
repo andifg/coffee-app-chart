@@ -6,6 +6,7 @@ kind: GrafanaDashboard
 metadata:
   name: {{ printf "%s-backend" (.Release.Name | trunc 63 | trimSuffix "-") }}
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector: {{ .Values.backend.grafana.instanceSelector | toYaml | nindent 4 }}
   datasources:
     - inputName: "DS_PROMETHEUS"
