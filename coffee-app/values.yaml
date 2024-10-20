@@ -27,6 +27,12 @@ backend:
   minioOriginalImagesPrefix: original
   prometheus:
     enabled: true
+  grafana:
+    enabled: true
+    datasourceName: Prometheus
+    instanceSelector:
+      matchLabels:
+        dashboards: "grafana"
 
 
 frontend:
