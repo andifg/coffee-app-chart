@@ -39,9 +39,9 @@ spec:
   - name: yq-target
     value: application.yaml
   - name: target-branch
-    value: {{target_branch}}
+    value: "{{target_branch}}"
   - name: source-branch
-    value: {{source_branch}}
+    value: "{{source_branch}}"
   - name: aws-credential-secret
     value: aws-iam-ecr-access
   - name: aws-region
