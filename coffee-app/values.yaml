@@ -25,6 +25,15 @@ backend:
       # If certManger is eanaled, this secret will be created, otherwise it needs to exist already
       secretName: api-coffee-app-tls
   minioOriginalImagesPrefix: original
+  prometheus:
+    enabled: true
+  grafana:
+    enabled: true
+    datasourceName: Prometheus
+    instanceSelector:
+      matchLabels:
+        dashboards: "grafana"
+
 
 
 frontend:
