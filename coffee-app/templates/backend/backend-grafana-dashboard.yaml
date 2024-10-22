@@ -152,7 +152,7 @@ spec:
               },
               "disableTextWrap": false,
               "editorMode": "builder",
-              "expr": "unique_daily_users{namespace=\"coffee-app-test\"}",
+              "expr": "unique_daily_users{namespace=\"{{ .Release.Namespace }}\"}",
               "fullMetaSearch": false,
               "includeNullMetadata": true,
               "instant": false,
@@ -178,7 +178,7 @@ spec:
       },
       "timepicker": {},
       "timezone": "browser",
-      "title": "Coffee App Test",
+      "title": "{{ printf "%s-backend" (.Release.Name | trunc 63 | trimSuffix "-") }}",
       "uid": "ae1f10d9iew3kb",
       "version": 3,
       "weekStart": ""
